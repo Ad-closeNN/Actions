@@ -23,8 +23,8 @@ jobs:
             - name: 获取内容
               id: speedtest_result
               run: |
-                CONTENT=$(cat Speedtest.txt)
-                echo "SPEEDTEST_RESULT=$CONTENT" >> $GITHUB_ENV
+                CONTENT=$(cat Speedtest.txt | xargs) # 去掉多余的空格
+                echo "SPEEDTEST_RESULT=${CONTENT//[$'\n']/ }" >> $GITHUB_ENV # 将换行符替换为空格
             
             - name: 发布 Release
               uses: actions/create-release@v1
