@@ -1,4 +1,4 @@
-name: 网速测试
+name: Speedtest
 
 on:
     workflow_dispatch:
@@ -13,11 +13,12 @@ jobs:
                 curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
                 sudo apt-get install speedtest
             
-            - uses: actions/checkout@v4
+            - name: 检出仓库
+              uses: actions/checkout@v4
 
             - name: 速度测试
               run: |
-                speedtest --accept-license >> Speedtest.txt
+                speedtest --accept-license
 
             - name: 获取内容
               id: speedtest_result
