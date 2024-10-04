@@ -30,12 +30,16 @@ jobs:
                   echo "$CONTENT" >> $GITHUB_ENV
                   echo "EOF" >> $GITHUB_ENV
             
+            - name: 设置动态标签
+              id: set_tag
+              run: echo "TAG_NAME=Speedtest [$(date +'%Y%m%d%H%M%S')]" >> $GITHUB_ENV
+
             - name: 发布 Release
               uses: actions/create-release@v1
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
-                tag_name: 'Speedtest'
+                tag_name: ${{ env.TAG_NAME }}
                 release_name: '[Speedtest] 速度测试'
                 body: ${{ env.SPEEDTEST_RESULT }}
                 draft: false
