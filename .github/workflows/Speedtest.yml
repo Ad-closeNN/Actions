@@ -1,0 +1,37 @@
+name: 网速测试
+
+on:
+    workflow_dispatch:
+
+jobs:
+    Speedtest:
+        runs-on: ubuntu-latest
+        steps: 
+            - name: 安装依赖
+              run: |
+                sudo apt-get install curl
+                curl -s https://packagecloud.io/install/repositories/ookla/speedtest-cli/script.deb.sh | sudo bash
+                sudo apt-get install speedtest
+            
+            - uses: actions/checkout@v4
+
+            - name: 速度测试
+              run: |
+                speedtest >> Speedtest.txt
+
+            - name: 获取内容
+              id: speedtest_result
+              run: |
+                CONTENT=$(cat Speedtest.txt)
+                echo "SPEEDTEST_RESULT=$CONTENT" >> $GITHUB_ENV
+            
+            - name: 发布 Release
+              uses: actions/create-release@v1
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                tag_name: 'Speedtest'
+                release_name: '[Speedtest] 速度测试'
+                body: ${{ env.SPEEDTEST_RESULT }}
+                draft: false
+                prerelease: false
