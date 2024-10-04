@@ -1,7 +1,11 @@
 name: Speedtest
 
 on:
+    push:
+        branches:
+            - main
     workflow_dispatch:
+    
 permissions:
   contents: write
   deployments: write
@@ -30,6 +34,7 @@ jobs:
                   echo "$CONTENT" >> $GITHUB_ENV
                   echo "EOF" >> $GITHUB_ENV
             
+            
             - name: 设置动态标签
               id: set_tag
               run: echo "TAG_NAME=Speedtest-$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
@@ -44,3 +49,11 @@ jobs:
                 body: ${{ env.SPEEDTEST_RESULT }}
                 draft: false
                 prerelease: false
+
+            - name: Upload Release Assets
+              uses: actions/upload-release-asset@v1
+              with:
+                upload_url: ${{ steps.create_release.outputs.upload_url }}
+                asset_path: Speedtest.txt  # 替换为你的资产路径
+                asset_name: Speedtest - $(date +'%Y.%m.%d.%H.%M.%S').txt  # 替换为你的资产文件名
+                asset_content_type: txt  # 根据你的资产类型修改
