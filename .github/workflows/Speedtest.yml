@@ -52,7 +52,8 @@ jobs:
                 prerelease: false
             
             - name: 获取文件名
-              run: echo "FILE_NAME=Speedtest-$(date +'%Y.%m.%d.%H.%M.%S').txt" >> $GITHUB_ENV
+              run: |
+                echo "FILE_NAME=Speedtest - $(date +'%Y.%m.%d %H.%M.%S').txt" >> $GITHUB_ENV
 
             - name: 上传 Assests
               uses: actions/upload-release-asset@v1
