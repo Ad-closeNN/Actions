@@ -53,6 +53,8 @@ jobs:
 
             - name: 上传 Assests
               uses: actions/upload-release-asset@v1
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
                 upload_url: ${{ steps.create_release.outputs.upload_url }}
                 asset_path: Speedtest.txt  # 替换为你的资产路径
