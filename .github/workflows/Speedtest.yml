@@ -32,7 +32,7 @@ jobs:
             
             - name: 设置动态标签
               id: set_tag
-              run: echo "TAG_NAME=Speedtest [$(date +'%Y%m%d%H%M%S')]" >> $GITHUB_ENV
+              run: echo "TAG_NAME=Speedtest-$('%Y%m%d%H%M%S')" >> $GITHUB_ENV
 
             - name: 发布 Release
               uses: actions/create-release@v1
