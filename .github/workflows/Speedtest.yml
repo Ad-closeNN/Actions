@@ -40,6 +40,7 @@ jobs:
               run: echo "TAG_NAME=Speedtest-$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
 
             - name: 发布 Release
+              id: create_release
               uses: actions/create-release@v1
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -50,7 +51,7 @@ jobs:
                 draft: false
                 prerelease: false
 
-            - name: Upload Release Assets
+            - name: 上传 Assests
               uses: actions/upload-release-asset@v1
               with:
                 upload_url: ${{ steps.create_release.outputs.upload_url }}
