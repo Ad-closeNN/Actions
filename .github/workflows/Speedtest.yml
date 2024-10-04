@@ -50,6 +50,9 @@ jobs:
                 body: ${{ env.SPEEDTEST_RESULT }}
                 draft: false
                 prerelease: false
+            
+            - name: 获取文件名
+              run: echo "FILE_NAME=Speedtest-$(date +'%Y.%m.%d.%H.%M.%S').txt" >> $GITHUB_ENV
 
             - name: 上传 Assests
               uses: actions/upload-release-asset@v1
@@ -58,5 +61,5 @@ jobs:
               with:
                 upload_url: ${{ steps.create_release.outputs.upload_url }}
                 asset_path: Speedtest.txt  # 替换为你的资产路径
-                asset_name: Speedtest - $(date +'%Y.%m.%d.%H.%M.%S').txt  # 替换为你的资产文件名
+                asset_name: ${{ env.FILE_NAME }}  # 替换为你的资产文件名
                 asset_content_type: txt  # 根据你的资产类型修改
