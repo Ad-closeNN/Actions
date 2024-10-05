@@ -1,9 +1,6 @@
 name: Ping Report
 
 on:
-    push:
-        branches:
-            - main
     workflow_dispatch:
     schedule:
         - cron: '0 16 * * *'
@@ -13,7 +10,7 @@ permissions:
   deployments: write
 
 jobs:
-    Speedtest:
+    Ping:
         runs-on: ubuntu-latest
         steps: 
             - name: 安装依赖
@@ -43,7 +40,7 @@ jobs:
                 tag_name: ${{ env.TAG_NAME }}
                 release_name: '[Ping Report] 访问量报告'
                 body: |
-                  ### ${{ env.result }}
-                  <img src="https://profile-counter.glitch.me/WForst_Breeze/count.svg?comment=哼啊啊啊啊啊啊啊啊啊啊啊啊" alt="icon" width="130px">
+                  # ${{ env.result }}
+                  [WForst-Breeze 的 GitHub 主页](https://github.com/WForst-Breeze)
                 draft: false
                 prerelease: false
