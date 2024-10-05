@@ -9,4 +9,4 @@ from datetime import datetime, timedelta, timezone
 time_zone = timezone(timedelta(hours=8))
 time = datetime.now(time_zone)
 time_strftime = time.strftime("%Y/%m/%d %H:%M:%S")
-print("当前时间：",time_strftime,"访问量：", numbers)
+print("当前时间：",time_strftime,"\n访问量：", numbers)
