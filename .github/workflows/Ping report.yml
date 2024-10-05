@@ -42,7 +42,7 @@ jobs:
                 tag_name: ${{ env.TAG_NAME }}
                 release_name: '[Ping Report] 访问量报告'
                 body: |
-                  ${{ env.result }}
+                  # ${{ env.result }}
                   [WForst-Breeze 的 GitHub 主页](https://github.com/WForst-Breeze)
                 draft: false
                 prerelease: false
