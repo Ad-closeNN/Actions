@@ -24,8 +24,10 @@ jobs:
             - name: 获取当前访问量
               id: ping_report
               run: |
-                  result=$(python "Ping report.py")
-                  echo "result=$result" >> $GITHUB_ENV
+                result=$(python "Ping report.py")
+                echo "result<<EOF" >> $GITHUB_ENV
+                echo "$result" >> $GITHUB_ENV
+                echo "EOF" >> $GITHUB_ENV
 
             - name: 设置动态标签
               id: set_tag
@@ -40,7 +42,7 @@ jobs:
                 tag_name: ${{ env.TAG_NAME }}
                 release_name: '[Ping Report] 访问量报告'
                 body: |
-                  # ${{ env.result }}
+                  ${{ env.result }}
                   [WForst-Breeze 的 GitHub 主页](https://github.com/WForst-Breeze)
                 draft: false
                 prerelease: false
