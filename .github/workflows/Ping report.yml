@@ -1,0 +1,49 @@
+name: Ping Report
+
+on:
+    push:
+        branches:
+            - main
+    workflow_dispatch:
+    schedule:
+        - cron: '0 16 * * *'
+
+permissions:
+  contents: write
+  deployments: write
+
+jobs:
+    Speedtest:
+        runs-on: ubuntu-latest
+        steps: 
+            - name: 安装依赖
+              run: |
+                pip install beautifulsoup4
+                pip install lxml
+            
+            - name: 检出仓库
+              uses: actions/checkout@v4
+
+            - name: 获取当前访问量
+              id: ping_report
+              run: |
+                  result=$(python "Ping report.py")
+                  echo "result=$result" >> $GITHUB_ENV
+
+            - name: 设置动态标签
+              id: set_tag
+              run: echo "TAG_NAME=Ping Report-$(date +'%Y/%m/%d-%H.%M.%S')" >> $GITHUB_ENV
+
+            - name: 发布 Release
+              id: create_release
+              uses: actions/create-release@v1
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                tag_name: ${{ env.TAG_NAME }}
+                release_name: '[Ping Report] 访问量报告'
+                body: |
+                  ### ${{ env.result }}
+                  <img src="https://profile-counter.glitch.me/WForst_Breeze/count.svg?comment=哼啊啊啊啊啊啊啊啊啊啊啊啊" alt="icon" width="130px">
+                draft: false
+                prerelease: false
